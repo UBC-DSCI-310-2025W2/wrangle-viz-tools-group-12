@@ -8,6 +8,9 @@
 #' @return A data frame with a one column as binary variables
 #'
 #' @export
+#' 
+#' @importFrom rlang is_string
+#' 
 #' @examples
 #' count_classes(adult_raw, " marital_status", c(" Widowed"))
 #' 

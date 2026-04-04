@@ -9,6 +9,9 @@
 #' @return A ggplot object of a confusion matrix
 #' @export
 #'
+#' @importFrom ggplot2 ggplot aes geom_tile geom_text scale_fill_gradient labs theme_minimal theme element_text
+#' @importFrom caret confusionMatrix
+#' 
 #' @examples
 #' actual <- c(0, 1, 1, 1)
 #' predicted_classses <- c(0, 0, 1, 1)

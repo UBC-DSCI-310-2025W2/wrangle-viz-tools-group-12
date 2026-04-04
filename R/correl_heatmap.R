@@ -6,6 +6,11 @@
 #' @return A ggplot object of the correlation heatmap
 #' @export
 #'
+#' @importFrom dplyr select where
+#' @importFrom tibble rownames_to_column
+#' @importFrom tidyr pivot_longer
+#' @importFrom ggplot2 ggplot geom_tile scale_fill_gradient2 theme_minimal labs theme element_text
+#' 
 #' @examples
 #' plot_correlation_heatmap(mtcars, "Correlation Heatmap of mtcars")
 plot_correlation_heatmap <- function(data, title = "Correlation Heatmap") {
