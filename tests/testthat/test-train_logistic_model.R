@@ -1,6 +1,6 @@
 library(testthat)
 
-source("../../R/06_train_logistic_model.R", encoding = "UTF-8")
+source("../../R/train_logistic_model.R", encoding = "UTF-8")
 
 # ---- Test 1: Simple expected use case ----
 test_that("train_logistic_model returns a glm object", {

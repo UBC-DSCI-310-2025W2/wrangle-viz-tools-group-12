@@ -1,7 +1,7 @@
 library(testthat)
 library(rlang)
 
-source("../../R/07_make_dummy_col.R", encoding = "UTF-8")
+source("../../R/make_dummy_col.R", encoding = "UTF-8")
  # 1.Simple expected cases
 test_that("make_dummy_col works correctly with one string in the vector", {
   df <- data.frame(

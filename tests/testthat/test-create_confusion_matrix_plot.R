@@ -1,7 +1,7 @@
 library(testthat)
 library(caret)
 
-source("../../R/08_create_confusion_matrix_plot.R")
+source("../../R/create_confusion_matrix_plot.R")
 
 # Test 1: Simple use case 1 (actual and predicted are exact same)
 test_that("create_confusion_matrix_plot returns a ggplot object", {

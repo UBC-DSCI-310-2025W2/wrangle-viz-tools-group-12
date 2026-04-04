@@ -1,6 +1,6 @@
 library(testthat)
 library(ggplot2)
-source("../../R/05_correl_heatmap.R")
+source("../../R/correl_heatmap.R")
 
 test_that("returns a ggplot object", {
   p <- plot_correlation_heatmap(mtcars)
