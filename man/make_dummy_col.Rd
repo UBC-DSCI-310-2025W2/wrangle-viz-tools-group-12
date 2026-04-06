@@ -20,7 +20,10 @@ A data frame with a one column as binary variables
 Converts one column in a dataframe into dummy variables
 }
 \examples{
-count_classes(adult_raw, " marital_status", c(" Widowed"))
+df <- data.frame(
+  marital_status = c("Married", "Widowed", "Single", "Widowed")
+)
+make_dummy_col(df, "marital_status", "Widowed")
 
 
 }
