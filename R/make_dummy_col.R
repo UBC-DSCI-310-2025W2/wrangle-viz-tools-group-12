@@ -12,7 +12,10 @@
 #' @importFrom rlang is_string
 #' 
 #' @examples
-#' count_classes(adult_raw, " marital_status", c(" Widowed"))
+#' df <- data.frame(
+#'   marital_status = c("Married", "Widowed", "Single", "Widowed")
+#' )
+#' make_dummy_col(df, "marital_status", "Widowed")
 #' 
 #' 
 make_dummy_col <- function(data_frame, col_name, values) {

@@ -10,6 +10,7 @@
 #' @importFrom tibble rownames_to_column
 #' @importFrom tidyr pivot_longer
 #' @importFrom ggplot2 ggplot geom_tile scale_fill_gradient2 theme_minimal labs theme element_text
+#' @importFrom stats cor
 #' 
 #' @examples
 #' plot_correlation_heatmap(mtcars, "Correlation Heatmap of mtcars")

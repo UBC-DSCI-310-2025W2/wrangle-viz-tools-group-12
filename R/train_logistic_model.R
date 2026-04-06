@@ -9,6 +9,8 @@
 #' @return A trained glm model object
 #' @export
 #'
+#' @importFrom stats glm binomial
+#' 
 #' @examples
 #' df <- data.frame(x = c(1,2,3), y = c(0,1,0))
 #' train_logistic_model(df, y ~ x)
