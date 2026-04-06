@@ -20,6 +20,6 @@ one of the actual ground truth.
 }
 \examples{
 actual <- c(0, 1, 1, 1)
-predicted_classses <- c(0, 0, 1, 1)
+predicted_classes <- c(0, 0, 1, 1)
 create_confusion_matrix_plot(actual, predicted_classes)
 }

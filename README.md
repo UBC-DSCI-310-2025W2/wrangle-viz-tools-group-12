@@ -5,6 +5,7 @@
 
 <!-- badges: start -->
 
+[![R-CMD-check](https://github.com/UBC-DSCI-310-2025W2/wrangle-viz-tools-group-12/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/UBC-DSCI-310-2025W2/wrangle-viz-tools-group-12/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of WrangleVizTools is to …
