@@ -4,12 +4,14 @@
 \alias{make_dummy_col}
 \title{Transforms a column into dummy variables 1 or 0}
 \usage{
-make_dummy_col(data_frame, col_name, values)
+make_dummy_col(data_frame, col_name, new_name, values)
 }
 \arguments{
 \item{data_frame}{A data frame or data frame extension (e.g. a tibble).}
 
 \item{col_name}{The name of the column (a single string) to check to convert its values to binary}
+
+\item{new_name}{The name of the new column (a single string) for new binary variables, can be same as col name}
 
 \item{values}{A vector of values to be treated as one c(...) or a singular value of any type except a dataframe or tibble}
 }
@@ -17,13 +19,13 @@ make_dummy_col(data_frame, col_name, values)
 A data frame with a one column as binary variables
 }
 \description{
-Converts one column in a dataframe into dummy variables
+Converts one column in a dataframe into dummy variables, overwrites the column is it has the same name
 }
 \examples{
 df <- data.frame(
   marital_status = c("Married", "Widowed", "Single", "Widowed")
 )
-make_dummy_col(df, "marital_status", "Widowed")
+make_dummy_col(df, "marital_status", "status", "Widowed")
 
 
 }
