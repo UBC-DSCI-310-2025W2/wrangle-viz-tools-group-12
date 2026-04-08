@@ -4,8 +4,8 @@ Version: 0.0.0.9000
 Authors@R: c(
     person("Andy", "Xin", email = "andyxin0420@gmail.com", role = c("aut", "cre")),
     person("Taehyun", "Kim", email = "tkim12102004@gmail.com", role = c("aut")),
-    person("Aryan", "Shah", email = "email.com", role = c("aut")),
-    person("Lucas", "Ortiz Molina", email = "email.com", role = c("aut"))
+    person("Aryan", "Shah", email = "aryan10shah@gmail.com", role = c("aut")),
+    person("Lucas", "Ortiz Molina", email = "ortizmolinalucas@gmail.com", role = c("aut"))
     )
 Description: A set of functions to simplify data wrangling, create visualizations, 
     and build logistic regression models with clear output and reproducible workflows.
