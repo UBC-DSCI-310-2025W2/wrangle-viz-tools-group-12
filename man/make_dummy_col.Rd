@@ -19,7 +19,7 @@ make_dummy_col(data_frame, col_name, new_name, values)
 A data frame with a one column as binary variables
 }
 \description{
-Converts one column in a dataframe into dummy variables removing the original column from dataframe
+Converts one column in a dataframe into dummy variables, overwrites the column is it has the same name
 }
 \examples{
 df <- data.frame(

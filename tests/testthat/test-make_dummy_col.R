@@ -2,7 +2,8 @@ library(testthat)
 library(rlang)
 
 source("../../R/make_dummy_col.R", encoding = "UTF-8")
- # 1.Simple expected cases
+
+# 1. Simple expected cases
 test_that("make_dummy_col works correctly with one string in the vector", {
   df <- data.frame(
     name = c("Alice", "Bob", "Charlie", "David"),
@@ -12,37 +13,53 @@ test_that("make_dummy_col works correctly with one string in the vector", {
     name = c("Alice", "Bob", "Charlie", "David"),
     status = c(1, 0, 1, 0)
   )
-  result <- make_dummy_col(df, "status","status", c("Married"))
+
+  result <- expect_warning(
+    make_dummy_col(df, "status", "status", c("Married")),
+    "The new column name is same as the selected column name, overwritting original column"
+  )
   expect_identical(result, df_expected)
-  result_2 <- make_dummy_col(df, "status", "status", "Married")
+
+  result_2 <- expect_warning(
+    make_dummy_col(df, "status", "status", "Married"),
+    "The new column name is same as the selected column name, overwritting original column"
+  )
   expect_identical(result_2, df_expected)
 })
-test_that("make_dummy_col works correctly with multiple string in the vector", {
+
+test_that("make_dummy_col works correctly with multiple strings in the vector", {
   df <- data.frame(
     name = c("Alice", "Bob", "Charlie", "David"),
     status = c("Married", "Single", "Married", "Divorced")
   )
   df_expected <- data.frame(
     name = c("Alice", "Bob", "Charlie", "David"),
+    status = c("Married", "Single", "Married", "Divorced"),
     married = c(1, 0, 1, 1)
   )
+
   result <- make_dummy_col(df, "status", "married", c("Married", "Divorced"))
   expect_identical(result, df_expected)
 })
-test_that("make_dummy_col work correctly with num in the vector", {
+
+test_that("make_dummy_col works correctly with numeric vector", {
   df <- data.frame(
     numbers = c(100, 100, 99, 98),
     status = c("Married", "Single", "Married", "Divorced")
   )
   df_expected <- data.frame(
-    status = c("Married", "Single", "Married", "Divorced"),
-    numbers = c(1, 1, 1, 0)
+    numbers = c(1, 1, 1, 0),
+    status = c("Married", "Single", "Married", "Divorced")
   )
-  result <- make_dummy_col(df, "numbers","numbers", c(100, 99))
+
+  result <- expect_warning(
+    make_dummy_col(df, "numbers", "numbers", c(100, 99)),
+    "The new column name is same as the selected column name, overwritting original column"
+  )
   expect_identical(result, df_expected)
 })
 
- # 2. Edge cases
+# 2. Edge cases
 test_that("Warning triggers for '?'", {
   df <- data.frame(
     x = c(1,2,3,4),
@@ -52,12 +69,16 @@ test_that("Warning triggers for '?'", {
     x = c(1,2,3,4),
     y = c(0,1,0,1)
   )
-  expect_identical(
-    expect_warning(make_dummy_col(df, "y", "y", c("1")), "contains NA or '\\?'"),
-   df_expected)
+
+  result <- expect_warning(
+    make_dummy_col(df, "y", "y", c("1")),
+    "contains NA or '\\?'"
+  )
+
+  expect_identical(result, df_expected)
 })
 
-test_that("Warning triggers for 'NA", {
+test_that("Warning triggers for NA", {
   df <- data.frame(
     x = c(1,2,3,4),
     y = c(0,1,NA,1)
@@ -66,10 +87,13 @@ test_that("Warning triggers for 'NA", {
     x = c(1,2,3,4),
     y = c(0,1,0,1)
   )
-  
-  expect_identical(
-    expect_warning(make_dummy_col(df, "y","y", c(1)), "contains NA or '\\?'"),
-   df_expected)
+
+  result <- expect_warning(
+    make_dummy_col(df, "y", "y", c(1)),
+    "contains NA or '\\?'"
+  )
+
+  expect_identical(result, df_expected)
 })
 
 test_that("make_dummy_col works when vector is empty", { 
@@ -78,50 +102,64 @@ test_that("make_dummy_col works when vector is empty", {
     status = c("Married", "Single", "Married", "Divorced")
   )
   df_expected <- data.frame(
-    status = c("Married", "Single", "Married", "Divorced"),
-    numbers = c(0, 0, 0, 0)
+    numbers = c(0, 0, 0, 0),
+    status = c("Married", "Single", "Married", "Divorced")
   )
 
-  expect_identical(
-    expect_warning(make_dummy_col(df, "numbers","numbers", c()),
-    "Type mismatch: The provided values are not the same class as the column values.")      
-      , df_expected) #this triggers a warning and expected
+  result <- expect_warning(
+    make_dummy_col(df, "numbers", "numbers", c()),
+    "Type mismatch"
+  )
 
+  expect_identical(result, df_expected)
 })
 
-test_that("make_dummy_col works no value column matches vector", {
+test_that("make_dummy_col works when no values match", {
   df <- data.frame(
     numbers = c(100, 100, 99, 98),
     status = c("Married", "Single", "Married", "Divorced")
   )
   df_expected <- data.frame(
-    status = c("Married", "Single", "Married", "Divorced"),
-    numbers = c(0, 0, 0, 0)
+    numbers = c(0, 0, 0, 0),
+    status = c("Married", "Single", "Married", "Divorced")
   )
-  result <- make_dummy_col(df, "numbers", "numbers", c(2))
+
+  result <- expect_warning(
+    make_dummy_col(df, "numbers", "numbers", c(2)),
+    "The new column name is same as the selected column name, overwritting original column"
+  )
+
   expect_identical(result, df_expected)
 })
 
-test_that("make_dummy_col works when all value column matches vector", {
+test_that("make_dummy_col works when all values match", {
   df <- data.frame(
     numbers = c(100, 100, 100, 100),
     status = c("Married", "Single", "Married", "Divorced")
   )
   df_expected <- data.frame(
-    status = c("Married", "Single", "Married", "Divorced"),
-    numbers = c(1, 1, 1, 1)
+    numbers = c(1, 1, 1, 1),
+    status = c("Married", "Single", "Married", "Divorced")
   )
-  result <- make_dummy_col(df, "numbers","numbers", c(100))
+
+  result <- expect_warning(
+    make_dummy_col(df, "numbers", "numbers", c(100)),
+    "The new column name is same as the selected column name, overwritting original column"
+  )
+
   expect_identical(result, df_expected)
 })
 
-test_that("make_dummy_col works when vector is a different type", {
+test_that("make_dummy_col warns when vector is different type", {
   df <- data.frame(
     status = c("Married", "Single", "Married", "Divorced"), 
     numbers = c(100, 100, 100, 100)
   )
 
-  expect_warning(make_dummy_col(df, "numbers","numbers", c("100")),"Type mismatch: The provided values are not the same class as the column values.")
+  expect_warning(
+    make_dummy_col(df, "numbers", "numbers", c("100")),
+    "Type mismatch"
+  )
 })
 
 test_that("make_dummy_col works when vector contains string and num", {
@@ -129,70 +167,66 @@ test_that("make_dummy_col works when vector contains string and num", {
     numbers = c(100, 100, 100, 98),
     status = c("Married", "Single", "Married", "Divorced")
   )
+
+  result <- expect_warning(
+    make_dummy_col(df, "numbers", "numbers", c("100", 98)),
+    "Type mismatch"
+  )
+
   df_expected <- data.frame(
-    status = c("Married", "Single", "Married", "Divorced"),
-    numbers = c(0, 0, 0, 0)
+    numbers = c(1,1, 1, 1),
+    status = c("Married", "Single", "Married", "Divorced")
   )
 
-    expect_warning(
-      make_dummy_col(df, "numbers", "numbers",c("100", 98)),
-      "Type mismatch: The provided values are not the same class as the column values.")
-
+  expect_identical(result, df_expected)
 })
 
+# 3. Error / adversarial cases
 
-#3. Abnormal, error or adversarial use cases.
+test_that("make_dummy_col stops if input is not a dataframe", {
+  expect_error(
+    make_dummy_col(1, "numbers", "numbers", c(100)),
+    "`data_frame` must be a data frame or tibble."
+  )
+})
 
-test_that("make_dummy_col stops if dataframe is not a dataframe", {
+test_that("make_dummy_col stops if col_name is not a single string", {
   df <- data.frame(
     numbers = c(100, 100, 100, 98),
     status = c("Married", "Single", "Married", "Divorced")
   )
 
-    expect_error(
-      make_dummy_col(1, "numbers", "numbers", c(100)),
-      "`data_frame` must be a data frame or tibble."
-      )
+  expect_error(
+    make_dummy_col(df, 1, "numbers", c(100)),
+    "`col_name` must be a single string."
+  )
+
+  expect_error(
+    make_dummy_col(df, c("hi", "hello"), "numbers", c(100)),
+    "`col_name` must be a single string."
+  )
 })
 
-test_that("make_dummy_col stops if col name is not a single string", {
+test_that("make_dummy_col stops if values is a dataframe", {
   df <- data.frame(
     numbers = c(100, 100, 100, 98),
     status = c("Married", "Single", "Married", "Divorced")
   )
 
-    expect_error(
-      make_dummy_col(df, 1, "1", c(100)),
-      "`col_name` must be a single string."
-      )
-    expect_error(
-      make_dummy_col(df, c("hi", "hello"),"name", c(100)),
-      "`col_name` must be a single string."
-      )
+  expect_error(
+    make_dummy_col(df, "status", "status", df),
+    "`values` cannot be a dataframe."
+  )
 })
 
-test_that("make_dummy_col stops if values is not a vector", {
+test_that("make_dummy_col stops if column not found", {
   df <- data.frame(
     numbers = c(100, 100, 100, 98),
     status = c("Married", "Single", "Married", "Divorced")
   )
 
-    expect_error(
-      make_dummy_col(df, "status","status", df),
-      "`values` cannot be a dataframe."
-      )
-})
-
-test_that("make_dummy_col stops if values is not a vector", {
-  df <- data.frame(
-    numbers = c(100, 100, 100, 98),
-    status = c("Married", "Single", "Married", "Divorced")
+  expect_error(
+    make_dummy_col(df, "testing", "testing", 100),
+    "Column testing not found in data frame."
   )
-
-    expect_error(
-      make_dummy_col(df, "testing", "testing",100),
-      "Column testing not found in data frame."
-      )
 })
-
-

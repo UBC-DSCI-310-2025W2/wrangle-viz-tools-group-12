@@ -1,6 +1,6 @@
 #' Transforms a column into dummy variables 1 or 0
 #' 
-#' Converts one column in a dataframe into dummy variables removing the original column from dataframe
+#' Converts one column in a dataframe into dummy variables, overwrites the column is it has the same name
 #'
 #' @param data_frame A data frame or data frame extension (e.g. a tibble).
 #' @param col_name The name of the column (a single string) to check to convert its values to binary
@@ -42,12 +42,12 @@ make_dummy_col <- function(data_frame, col_name, new_name, values) {
   if (any(is.na(data_frame[[col_name]]) | data_frame[[col_name]] == "?", na.rm = TRUE)) {
     warning("The column contains NA or '?' values which will be coded as 0.")
   }
+  if (col_name == new_name) {
+    warning("The new column name is same as the selected column name, overwritting original column")
+  }
 
-  # this generates a vector of dummy varaibles
-  dummy_vector <- ifelse(data_frame[[col_name]] %in% values, 1, 0)
-  data_frame[[col_name]] <- NULL
-  data_frame[[new_name]] <- dummy_vector
-  #overriding the old column as a dummy variable
+  data_frame[[new_name]] <- ifelse(data_frame[[col_name]] %in% values, 1, 0)
+
 
 
   return(data_frame)
