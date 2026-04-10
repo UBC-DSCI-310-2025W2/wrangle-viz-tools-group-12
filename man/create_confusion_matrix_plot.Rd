@@ -2,24 +2,25 @@
 % Please edit documentation in R/create_confusion_matrix_plot.R
 \name{create_confusion_matrix_plot}
 \alias{create_confusion_matrix_plot}
-\title{Creates a confusion matrix plot to compare predicted classes with actual classes}
+\title{Creates a confusion matrix plot from a confusion matrix table}
 \usage{
-create_confusion_matrix_plot(actual, predicted_classes)
+create_confusion_matrix_plot(cm_table)
 }
 \arguments{
-\item{actual}{A vector of the ground truth classes}
-
-\item{predicted_classes}{A vector of the predicted classes}
+\item{cm_table}{A table or data frame representing the confusion matrix
+(e.g., cm$table from caret::confusionMatrix)}
 }
 \value{
 A ggplot object of a confusion matrix
 }
 \description{
-This function creates a confusion matrix plot when it is given two vectors, one of the predicted classes and
-one of the actual ground truth.
+This function takes a confusion matrix table (e.g., from caret::confusionMatrix)
+and returns a ggplot visualization.
 }
 \examples{
-actual <- c(0, 1, 1, 1)
-predicted_classes <- c(0, 0, 1, 1)
-create_confusion_matrix_plot(actual, predicted_classes)
+library(caret)
+actual <- factor(c(0, 1, 1, 1))
+predicted <- factor(c(0, 0, 1, 1))
+cm <- confusionMatrix(predicted, actual)
+create_confusion_matrix_plot(cm$table)
 }

@@ -1,58 +1,38 @@
-#' Creates a confusion matrix plot to compare predicted classes with actual classes
+#' Creates a confusion matrix plot from a confusion matrix table
 #'
-#' This function creates a confusion matrix plot when it is given two vectors, one of the predicted classes and
-#' one of the actual ground truth.
+#' This function takes a confusion matrix table (e.g., from caret::confusionMatrix)
+#' and returns a ggplot visualization.
 #'
-#' @param actual A vector of the ground truth classes
-#' @param predicted_classes A vector of the predicted classes
+#' @param cm_table A table or data frame representing the confusion matrix
+#' (e.g., cm$table from caret::confusionMatrix)
 #'
 #' @return A ggplot object of a confusion matrix
 #' @export
 #'
 #' @importFrom ggplot2 ggplot aes geom_tile geom_text scale_fill_gradient labs theme_minimal theme element_text
-#' @importFrom caret confusionMatrix
-#' 
+#'
 #' @examples
-#' actual <- c(0, 1, 1, 1)
-#' predicted_classes <- c(0, 0, 1, 1)
-#' create_confusion_matrix_plot(actual, predicted_classes)
+#' library(caret)
+#' actual <- factor(c(0, 1, 1, 1))
+#' predicted <- factor(c(0, 0, 1, 1))
+#' cm <- confusionMatrix(predicted, actual)
+#' create_confusion_matrix_plot(cm$table)
 
-create_confusion_matrix_plot <- function(actual, predicted_classes) {
-  if (length(actual) != length(predicted_classes)) {
-    stop("`actual` and `predicted_classes` must have the same length.")
-  }
+create_confusion_matrix_plot <- function(cm_table) {
 
-  if (!is.numeric(actual)) {
-    stop("`actual` must be numeric (0/1).")
-  }
-
-  if (!all(actual %in% c(0, 1))) {
-    stop("`actual` must only contain 0 and 1.")
-  }
-
-  if (!is.numeric(predicted_classes)) {
-    stop("`predicted_classes` must be numeric (0/1).")
-  }
-
-  if (!all(predicted_classes %in% c(0, 1))) {
-    stop("`predicted_classes` must only contain 0 and 1.")
-  }
-
-  actual_f <- factor(actual)
-  pred_f <- factor(as.numeric(as.character(predicted_classes)))
-
-  cm <- confusionMatrix(pred_f, actual_f)
-  conf_df <- as.data.frame(cm$table)
+  # Convert to data frame if needed
+  conf_df <- as.data.frame(cm_table)
   names(conf_df) <- c("Actual", "Predicted", "Freq")
 
-  confusion_plot <- ggplot(conf_df, aes(x = Actual, y = Predicted, fill = Freq)) +
+  # Plot
+  ggplot(conf_df, aes(x = Actual, y = Predicted, fill = Freq)) +
     geom_tile() +
     geom_text(aes(label = Freq), size = 6) +
     scale_fill_gradient(low = "white", high = "steelblue") +
     labs(
-      title = "Confusion Matrix for Logistic Regression",
-      x = "Actual Income (0 = <=50K, 1 = >50K)",
-      y = "Predicted Income"
+      title = "Confusion Matrix",
+      x = "Actual",
+      y = "Predicted"
     ) +
     theme_minimal() +
     theme(
@@ -62,6 +42,4 @@ create_confusion_matrix_plot <- function(actual, predicted_classes) {
       axis.title.y = element_text(size = 16),
       plot.title = element_text(size = 18, face = "bold")
     )
-
-  return(confusion_plot)
 }
