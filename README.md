@@ -9,10 +9,10 @@
 <!-- badges: end -->
 
 ## Authors:
-Andy Xin
-Aryan Shah
-Lucas Ortiz Molina
-Taehyun Kim
+Andy Xin </br>
+Aryan Shah </br>
+Lucas Ortiz Molina </br>
+Taehyun Kim </br>
 
 ## About
 WrangleVizTools is an R package designed to support data wrangling and visualization workflows for income classification tasks. It was developed as part of a salary income analysis project using the UCI Adult Census dataset (https://archive-beta.ics.uci.edu/dataset/2/adult), where the goal is to predict whether an individual earns ≤$50K or >$50K per year. The project can be found in https://github.com/UBC-DSCI-310-2025W2/dsci-310-group-12. 
@@ -23,7 +23,7 @@ Within the R ecosystem, WrangleVizTools sits as a lightweight, task-specific ext
 ## Installation
 
 You can install the development version of WrangleVizTools from
-[GitHub](https://github.com/) with:
+[GitHub](https://github.com/) using:
 
 ``` r
 # install.packages("pak")
@@ -33,8 +33,14 @@ or if using termnial use:
 ```bash
 Rscript -e 'pak::pak("UBC-DSCI-310-2025W2/wrangle-viz-tools-group-12")'
 ```
+## Usage
 
-Package functions:
+Once the package is installed, load it with:
+``` r
+library(WrangleVizTools)
+```
+
+## Package functions:
 This package includes the following functions found in the R folder which are: 
 
 - `create_confusion_matrix_plot`, generates a confusion matrix plot
@@ -42,7 +48,7 @@ This package includes the following functions found in the R folder which are:
 - `plot_correlation_heatmap`, generates a correlation heatmap
 - `train_logistic_model`, trains a logistic regression model using a given dataset and a formula
 
-These functions support verious steps used in the workflow.
+These functions support various steps used in the workflow.
 
 ## License 
 
