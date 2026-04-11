@@ -8,47 +8,50 @@
 [![R-CMD-check](https://github.com/UBC-DSCI-310-2025W2/wrangle-viz-tools-group-12/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/UBC-DSCI-310-2025W2/wrangle-viz-tools-group-12/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal of WrangleVizTools is to …
+## Authors:
+Andy Xin </br>
+Aryan Shah </br>
+Lucas Ortiz Molina </br>
+Taehyun Kim </br>
 
+## About
+WrangleVizTools is an R package designed to support data wrangling and visualization workflows for income classification tasks. It was developed as part of a salary income analysis project using the UCI Adult Census dataset (https://archive-beta.ics.uci.edu/dataset/2/adult), where the goal is to predict whether an individual earns ≤$50K or >$50K per year. The project can be found in https://github.com/UBC-DSCI-310-2025W2/dsci-310-group-12. 
+
+At a high level, the package provides utility functions to wrangle, train, and visualize data, making it easier to prepare datasets for modeling and exploratory analysis. It is especially useful for reproducible data science pipelines where consistent preprocessing and standardized visualizations are required.
+
+Within the R ecosystem, WrangleVizTools sits as a lightweight, task-specific extension that complements established packages in the tidyverse (e.g., data manipulation and visualization tools). Rather than replacing these widely used libraries, it builds on top of them by offering tailored helper functions for common wrangling and plotting steps used in classification problems. It allows users to implament commonly used code efficiently without writting long lines of code.
 ## Installation
 
 You can install the development version of WrangleVizTools from
-[GitHub](https://github.com/) with:
+[GitHub](https://github.com/) using:
 
 ``` r
 # install.packages("pak")
 pak::pak("UBC-DSCI-310-2025W2/wrangle-viz-tools-group-12")
 ```
+or if using termnial use:
+```bash
+Rscript -e 'pak::pak("UBC-DSCI-310-2025W2/wrangle-viz-tools-group-12")'
+```
+## Usage
 
-## Example
-
-This is a basic example which shows you how to solve a common problem:
-
+Once the package is installed, load it with:
 ``` r
 library(WrangleVizTools)
-## basic example code
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+## Package functions:
+This package includes the following functions found in the R folder which are: 
 
-``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
-```
+- `create_confusion_matrix_plot`, generates a confusion matrix plot
+- `make_dummy_col`, wrangles dataframe by making a column into dummy variables 
+- `plot_correlation_heatmap`, generates a correlation heatmap
+- `train_logistic_model`, trains a logistic regression model using a given dataset and a formula
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this.
+These functions support various steps used in the workflow.
 
-You can also embed plots, for example:
+## License 
 
-<img src="man/figures/README-pressure-1.png" alt="" width="100%" />
+This project is distributed under the following license:
 
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+MIT License (see LICENSE.md for full details)
